@@ -40,7 +40,7 @@ public class TransactionService {
    * @return Estatísticas das transações.
    */
   public DoubleSummaryStatistics getStatistics() {
-    var now = OffsetDateTime.now();
+    OffsetDateTime now = OffsetDateTime.now();
 
     return transactions.stream()
         .filter(t -> t.getDateTime().isAfter(now.minusSeconds(60)))

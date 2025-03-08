@@ -1,6 +1,9 @@
 package com.erico.desafio.itau.controller;
 
+import java.net.URI;
 import java.time.OffsetDateTime;
+import java.util.DoubleSummaryStatistics;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,8 +36,8 @@ public class TransactionController {
       return ResponseEntity.unprocessableEntity().build();
     }
 
-    var transactionId = this.transactionService.addTransaction(request.toModel());
-    var uri = uriBuilder.path("/transacao/{id}").buildAndExpand(transactionId).toUri();
+    UUID transactionId = this.transactionService.addTransaction(request.toModel());
+    URI uri = uriBuilder.path("/transacao/{id}").buildAndExpand(transactionId).toUri();
     return ResponseEntity.created(uri).build();
   }
 
@@ -46,7 +49,7 @@ public class TransactionController {
 
   @GetMapping("/estatistica")
   public ResponseEntity<StatisticsResponse> getStatistics() {
-    var statistics = transactionService.getStatistics();
+    DoubleSummaryStatistics statistics = transactionService.getStatistics();
     return ResponseEntity.ok(new StatisticsResponse(statistics));
   }
 
