@@ -50,6 +50,11 @@ public class TransactionController {
   @GetMapping("/estatistica")
   public ResponseEntity<StatisticsResponse> getStatistics() {
     DoubleSummaryStatistics statistics = transactionService.getStatistics();
+
+    if (statistics.getCount() == 0) {
+      return ResponseEntity.ok(new StatisticsResponse(0,0,0,0,0));
+    };
+
     return ResponseEntity.ok(new StatisticsResponse(statistics));
   }
 
