@@ -32,4 +32,19 @@ public class TransactionService {
   public void clearTransactions() {
     transactions.clear();
   }
+
+  /**
+   * Calcula e retorna as estatísticas das transações adicionadas nos últimos 60
+   * segundos.
+   * 
+   * @return Estatísticas das transações.
+   */
+  public DoubleSummaryStatistics getStatistics() {
+    var now = OffsetDateTime.now();
+
+    return transactions.stream()
+        .filter(t -> t.getDateTime().isAfter(now.minusSeconds(60)))
+        .mapToDouble(Transaction::getValue)
+        .summaryStatistics();
+  }
 }

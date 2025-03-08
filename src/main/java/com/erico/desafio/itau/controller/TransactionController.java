@@ -43,4 +43,12 @@ public class TransactionController {
     transactionService.clearTransactions();
     return ResponseEntity.ok().build();
   }
+
+  @GetMapping("/estatistica")
+  public ResponseEntity<StatisticsResponse> getStatistics() {
+    var statistics = transactionService.getStatistics();
+    var response = new StatisticsResponse(statistics);
+    return ResponseEntity.ok(response);
+  }
+
 }
