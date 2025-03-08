@@ -54,7 +54,7 @@ public class TransactionController {
 
     if (statistics.getCount() == 0) {
       return ResponseEntity.ok(new StatisticsResponse(0,0,0,0,0));
-    };
+    }
 
     return ResponseEntity.ok(new StatisticsResponse(statistics));
   }
