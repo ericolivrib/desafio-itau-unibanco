@@ -34,16 +34,17 @@ public class TransactionService {
   }
 
   /**
-   * Calcula e retorna as estatísticas das transações adicionadas nos últimos 60
+   * Calcula e retorna as estatísticas das transações adicionadas nos últimos
    * segundos.
    * 
+   * @param interval Intervalo de busca de transações em segundos.
    * @return Estatísticas das transações.
    */
-  public DoubleSummaryStatistics getStatistics() {
+  public DoubleSummaryStatistics getStatistics(int interval) {
     OffsetDateTime now = OffsetDateTime.now();
 
     return transactions.stream()
-        .filter(t -> t.getDateTime().isAfter(now.minusSeconds(60)))
+        .filter(t -> t.getDateTime().isAfter(now.minusSeconds(interval)))
         .mapToDouble(Transaction::getValue)
         .summaryStatistics();
   }

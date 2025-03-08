@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,8 +49,8 @@ public class TransactionController {
   }
 
   @GetMapping("/estatistica")
-  public ResponseEntity<StatisticsResponse> getStatistics() {
-    DoubleSummaryStatistics statistics = transactionService.getStatistics();
+  public ResponseEntity<StatisticsResponse> getStatistics(@RequestParam(name = "intervalo", defaultValue = "60", required = false) int interval) {
+    DoubleSummaryStatistics statistics = transactionService.getStatistics(interval);
 
     if (statistics.getCount() == 0) {
       return ResponseEntity.ok(new StatisticsResponse(0,0,0,0,0));
