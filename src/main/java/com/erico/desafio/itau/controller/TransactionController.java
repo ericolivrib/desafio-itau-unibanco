@@ -47,8 +47,7 @@ public class TransactionController {
   @GetMapping("/estatistica")
   public ResponseEntity<StatisticsResponse> getStatistics() {
     var statistics = transactionService.getStatistics();
-    var response = new StatisticsResponse(statistics);
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(new StatisticsResponse(statistics));
   }
 
 }
