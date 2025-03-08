@@ -38,4 +38,9 @@ public class TransactionController {
     return ResponseEntity.created(uri).build();
   }
 
+  @DeleteMapping("/transacao")
+  public ResponseEntity<Void> deleteTransactions() {
+    transactionService.clearTransactions();
+    return ResponseEntity.ok().build();
+  }
 }

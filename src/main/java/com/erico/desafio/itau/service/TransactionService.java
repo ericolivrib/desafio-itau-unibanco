@@ -25,4 +25,11 @@ public class TransactionService {
     transactions.add(transaction);
     return transaction.getId();
   }
+
+  /**
+   * Limpa todas as transações presentes na fila de transações.
+   */
+  public void clearTransactions() {
+    transactions.clear();
+  }
 }
