@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.DoubleSummaryStatistics;
 import java.util.UUID;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -45,12 +46,18 @@ public class TransactionController {
   })
   public ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request, UriComponentsBuilder uriBuilder) {
     if (request.dateTime().isAfter(OffsetDateTime.now())) {
-      return ResponseEntity.unprocessableEntity().build();
+      return ResponseEntity
+          .status(HttpStatus.UNPROCESSABLE_ENTITY)
+          .build();
     }
 
     UUID transactionId = this.transactionService.addTransaction(request.toModel());
-    URI uri = uriBuilder.path("/transacao/{id}").buildAndExpand(transactionId).toUri();
-    return ResponseEntity.created(uri).build();
+    String uri = uriBuilder.path("/transacao/{id}").buildAndExpand(transactionId).toUriString();
+
+    return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .header(HttpHeaders.LOCATION, uri)
+        .build();
   }
 
   @DeleteMapping("/transacao")
@@ -60,7 +67,9 @@ public class TransactionController {
   })
   public ResponseEntity<Void> deleteTransactions() {
     transactionService.clearTransactions();
-    return ResponseEntity.ok().build();
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .build();
   }
 
   @GetMapping("/estatistica")
@@ -72,10 +81,14 @@ public class TransactionController {
     DoubleSummaryStatistics statistics = transactionService.getStatistics(interval);
 
     if (statistics.getCount() == 0) {
-      return ResponseEntity.ok(new StatisticsResponse(0,0,0,0,0));
+      return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(new StatisticsResponse(0, 0, 0, 0, 0));
     }
 
-    return ResponseEntity.ok(new StatisticsResponse(statistics));
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(new StatisticsResponse(statistics));
   }
 
 }
