@@ -11,12 +11,12 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public record TransactionRequest(
-  @NotNull
-  @Min(0)
+  @NotNull(message = "Valor da transação não pode estar vazio")
+  @Min(value = 0, message = "Valor da transação não pode ser negativo")
   @JsonProperty("valor")
   BigDecimal value,
 
-  @NotNull
+  @NotNull(message = "Data e hora da transação não podem estar vazios")
   @JsonProperty("dataHora")
   OffsetDateTime dateTime
 ) implements TransactionRequestSpec {
