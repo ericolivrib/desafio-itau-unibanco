@@ -8,6 +8,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.Objects;
+
 public class RequestLoggingInterceptor implements HandlerInterceptor {
   
   private static final Logger log = LoggerFactory.getLogger(RequestLoggingInterceptor.class);
@@ -33,7 +35,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
       request.getRequestURI(),
       duration,
       response.getStatus(),
-      HttpStatus.resolve(response.getStatus()).name().replace("_", " "),
+      Objects.requireNonNull(HttpStatus.resolve(response.getStatus())).name().replace("_", " "),
       request.getRemoteAddr(),
       request.getHeader(USER_AGENT_HEADER_KEY)
     };
