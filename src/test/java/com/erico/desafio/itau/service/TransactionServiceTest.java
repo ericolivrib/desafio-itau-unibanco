@@ -2,6 +2,7 @@ package com.erico.desafio.itau.service;
 
 import com.erico.desafio.itau.dto.StatisticsResponse;
 import com.erico.desafio.itau.dto.TransactionRequest;
+import com.erico.desafio.itau.exception.FutureTransactionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ class TransactionServiceTest {
 
     @BeforeEach
     void setUp() {
-        fixedClock = Clock.fixed(Instant.parse("2025-05-20T12:00:00Z"), ZoneOffset.UTC);
+        fixedClock = Clock.fixed(Instant.parse("2025-05-20T00:00:00Z"), ZoneOffset.UTC);
         underTest = new TransactionService(fixedClock);
     }
 
@@ -38,6 +39,16 @@ class TransactionServiceTest {
 
         // Assert
         Assertions.assertNotNull(result);
+    }
+
+    @Test
+    @DisplayName("Dada uma data e hora futura, deve lançar uma exceção ao adicionar transação")
+    void givenFutureDateTime_whenAddTransaction_thenThrowException() {
+        // Arrange
+        TransactionRequest request = new TransactionRequest(BigDecimal.valueOf(532.98), OffsetDateTime.now().plusMinutes(5));
+
+        // Act & Assert
+        Assertions.assertThrows(FutureTransactionException.class, () -> underTest.addTransaction(request));
     }
 
     @Test
