@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping
-public class TransactionController {
+public class TransactionController implements TransactionControllerSpec {
 
   private final TransactionService transactionService;
 
@@ -36,12 +36,6 @@ public class TransactionController {
   }
 
   @PostMapping("/transacao")
-  @Operation(summary = "Criar transação", description = "Adiciona uma transação na fila de transações", responses = {
-    @ApiResponse(responseCode = "201", description = "Transação adicionada com sucesso"),
-    @ApiResponse(responseCode = "400", description = "JSON de transação malformado"),
-    @ApiResponse(responseCode = "422", description = "Campos informados não atendem os requisitos de transações"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
   public ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request, UriComponentsBuilder uriBuilder) {
     if (request.dateTime().isAfter(OffsetDateTime.now())) {
       return ResponseEntity
@@ -59,10 +53,6 @@ public class TransactionController {
   }
 
   @DeleteMapping("/transacao")
-  @Operation(summary = "Deletar transações", description = "Limpa todas as transações da fila de transações", responses = {
-    @ApiResponse(responseCode = "200", description = "Transações deletadas com sucesso"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
   public ResponseEntity<Void> deleteTransactions() {
     transactionService.clearTransactions();
     return ResponseEntity
@@ -71,10 +61,6 @@ public class TransactionController {
   }
 
   @GetMapping("/estatistica")
-  @Operation(summary = "Estatísticas de transações", description = "Recupera as estatísticas das transações adicionadas em um intervalo de tempo", parameters = @Parameter(name = "intervalo", description = "Últimos segundos em que transações foram adicionadas", required = false, example = "60"), responses = {
-    @ApiResponse(responseCode = "200", description = "Estatísticas recuperadas com sucesso"),
-    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
-  })
   public ResponseEntity<StatisticsResponse> getStatistics(@RequestParam(name = "intervalo", defaultValue = "60", required = false) int interval) {
     DoubleSummaryStatistics statistics = transactionService.getStatistics(interval);
 

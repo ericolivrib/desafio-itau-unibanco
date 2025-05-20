@@ -18,7 +18,7 @@ public record TransactionRequest(
   @NotNull
   @JsonProperty("dataHora")
   OffsetDateTime dateTime
-) {
+) implements TransactionRequestSpec {
 
   public Transaction toModel() {
     return new Transaction(UUID.randomUUID(), value, dateTime);

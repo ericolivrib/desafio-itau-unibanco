@@ -8,7 +8,7 @@ public record StatisticsResponse(
   double avg,
   double min,
   double max
-) {
+) implements StatisticsResponseSpec {
 
   public StatisticsResponse(DoubleSummaryStatistics statistics) {
     this(statistics.getCount(), statistics.getSum(), statistics.getAverage(),
