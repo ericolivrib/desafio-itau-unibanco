@@ -13,7 +13,6 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Queue;
 import java.util.UUID;
 
 class TransactionServiceTest {
