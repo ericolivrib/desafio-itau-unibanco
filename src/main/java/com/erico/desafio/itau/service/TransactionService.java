@@ -9,6 +9,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.erico.desafio.itau.dto.StatisticsResponse;
 import com.erico.desafio.itau.dto.TransactionRequest;
+import com.erico.desafio.itau.exception.FutureTransactionException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.erico.desafio.itau.model.Transaction;
@@ -31,6 +34,11 @@ public class TransactionService {
    * @return UUID da nova transação.
    */
   public UUID addTransaction(TransactionRequest transactionDto) {
+    if (transactionDto.dateTime().isAfter(OffsetDateTime.now())) {
+      throw new FutureTransactionException("Transação efetuação em uma data futura: "
+              + transactionDto.dateTime());
+    }
+
     Transaction transaction = transactionDto.toModel();
     transactions.add(transaction);
     return transaction.getId();

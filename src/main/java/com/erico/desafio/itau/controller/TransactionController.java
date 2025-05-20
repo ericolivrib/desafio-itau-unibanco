@@ -33,13 +33,8 @@ public class TransactionController implements TransactionControllerSpec {
 
   @PostMapping("/transacao")
   public ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request, UriComponentsBuilder uriBuilder) {
-    if (request.dateTime().isAfter(OffsetDateTime.now())) {
-      return ResponseEntity
-          .status(HttpStatus.UNPROCESSABLE_ENTITY)
-          .build();
-    }
-
     UUID transactionId = this.transactionService.addTransaction(request);
+
     String uri = uriBuilder.path("/transacao/{id}").buildAndExpand(transactionId).toUriString();
 
     return ResponseEntity
