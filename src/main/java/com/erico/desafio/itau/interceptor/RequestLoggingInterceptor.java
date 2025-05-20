@@ -19,7 +19,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     request.setAttribute(START_TIME_ATTRIBUTE_KEY, System.currentTimeMillis());
-    log.info("{} {} - IP: {} - User Agent: {}", request.getMethod(), request.getRequestURI(), request.getRemoteAddr(), request.getHeader(USER_AGENT_HEADER_KEY));
+    log.info("{} {} | IP: {} - User Agent: {}", request.getMethod(), request.getRequestURI(), request.getRemoteAddr(), request.getHeader(USER_AGENT_HEADER_KEY));
     return true;
   }
 
@@ -29,7 +29,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
     long startTime = (long) request.getAttribute(START_TIME_ATTRIBUTE_KEY);
     long duration = System.currentTimeMillis() - startTime;
 
-    String logMessage = "{} {} - Duration: {}ms - Status: {} {} - IP: {} - User Agent: {}";
+    String logMessage = "{} {} | Duration: {}ms - Status: {} {} - IP: {} - User Agent: {}";
     Object[] logArgs = {
       request.getMethod(),
       request.getRequestURI(),
