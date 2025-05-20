@@ -43,7 +43,7 @@ public class TransactionController implements TransactionControllerSpec {
           .build();
     }
 
-    UUID transactionId = this.transactionService.addTransaction(request.toModel());
+    UUID transactionId = this.transactionService.addTransaction(request);
     String uri = uriBuilder.path("/transacao/{id}").buildAndExpand(transactionId).toUriString();
 
     return ResponseEntity

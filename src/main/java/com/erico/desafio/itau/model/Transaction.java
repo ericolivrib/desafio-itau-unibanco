@@ -1,15 +1,16 @@
 package com.erico.desafio.itau.model;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public class Transaction {
 
   private UUID id;
-  private Double value;
+  private BigDecimal value;
   private OffsetDateTime dateTime;
 
-  public Transaction(UUID id, Double value, OffsetDateTime dateTime) {
+  public Transaction(UUID id, BigDecimal value, OffsetDateTime dateTime) {
     this.id = id;
     this.value = value;
     this.dateTime = dateTime;
@@ -23,11 +24,11 @@ public class Transaction {
     this.id = id;
   }
   
-  public Double getValue() {
+  public BigDecimal getValue() {
     return value;
   }
   
-  public void setValue(Double value) {
+  public void setValue(BigDecimal value) {
     this.value = value;
   }
   

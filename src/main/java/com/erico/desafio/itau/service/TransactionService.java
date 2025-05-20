@@ -5,7 +5,9 @@ import java.util.DoubleSummaryStatistics;
 import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.DoubleStream;
 
+import com.erico.desafio.itau.dto.TransactionRequest;
 import org.springframework.stereotype.Service;
 
 import com.erico.desafio.itau.model.Transaction;
@@ -18,10 +20,11 @@ public class TransactionService {
   /**
    * Adiciona uma nova transasão na fila de transações.
    * 
-   * @param transaction Nova transação.
+   * @param transactionDto Nova transação.
    * @return UUID da nova transação.
    */
-  public UUID addTransaction(Transaction transaction) {
+  public UUID addTransaction(TransactionRequest transactionDto) {
+    Transaction transaction = transactionDto.toModel();
     transactions.add(transaction);
     return transaction.getId();
   }
@@ -45,7 +48,7 @@ public class TransactionService {
 
     return transactions.stream()
         .filter(t -> t.getDateTime().isAfter(now.minusSeconds(interval)))
-        .mapToDouble(Transaction::getValue)
+        .mapToDouble((t) -> t.getValue().doubleValue())
         .summaryStatistics();
   }
 }

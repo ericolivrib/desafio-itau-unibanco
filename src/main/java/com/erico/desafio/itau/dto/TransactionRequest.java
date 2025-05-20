@@ -1,5 +1,6 @@
 package com.erico.desafio.itau.dto;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public record TransactionRequest(
   @NotNull
   @Min(0)
   @JsonProperty("valor")
-  Double value,
+  BigDecimal value,
 
   @NotNull
   @JsonProperty("dataHora")
