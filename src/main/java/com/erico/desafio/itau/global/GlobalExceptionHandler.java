@@ -1,6 +1,6 @@
 package com.erico.desafio.itau.global;
 
-import com.erico.desafio.itau.exception.FutureTransactionException;
+import com.erico.desafio.itau.transaction.FutureTransactionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

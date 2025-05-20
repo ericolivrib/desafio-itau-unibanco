@@ -1,4 +1,4 @@
-package com.erico.desafio.itau.service;
+package com.erico.desafio.itau.transaction;
 
 import java.time.Clock;
 import java.time.OffsetDateTime;
@@ -7,12 +7,9 @@ import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import com.erico.desafio.itau.dto.StatisticsResponse;
-import com.erico.desafio.itau.dto.TransactionRequest;
-import com.erico.desafio.itau.exception.FutureTransactionException;
+import com.erico.desafio.itau.transaction.dto.StatisticsResponse;
+import com.erico.desafio.itau.transaction.dto.TransactionRequest;
 import org.springframework.stereotype.Service;
-
-import com.erico.desafio.itau.model.Transaction;
 
 @Service
 public class TransactionService {

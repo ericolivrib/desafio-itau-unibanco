@@ -1,4 +1,4 @@
-package com.erico.desafio.itau.model;
+package com.erico.desafio.itau.transaction;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

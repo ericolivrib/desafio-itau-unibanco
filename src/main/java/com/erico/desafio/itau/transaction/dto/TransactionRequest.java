@@ -1,10 +1,10 @@
-package com.erico.desafio.itau.dto;
+package com.erico.desafio.itau.transaction.dto;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import com.erico.desafio.itau.model.Transaction;
+import com.erico.desafio.itau.transaction.Transaction;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Min;

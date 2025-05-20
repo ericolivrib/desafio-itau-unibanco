@@ -1,8 +1,7 @@
-package com.erico.desafio.itau.service;
+package com.erico.desafio.itau.transaction;
 
-import com.erico.desafio.itau.dto.StatisticsResponse;
-import com.erico.desafio.itau.dto.TransactionRequest;
-import com.erico.desafio.itau.exception.FutureTransactionException;
+import com.erico.desafio.itau.transaction.dto.StatisticsResponse;
+import com.erico.desafio.itau.transaction.dto.TransactionRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

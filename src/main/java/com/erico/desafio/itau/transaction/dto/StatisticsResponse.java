@@ -1,4 +1,4 @@
-package com.erico.desafio.itau.dto;
+package com.erico.desafio.itau.transaction.dto;
 
 import java.util.DoubleSummaryStatistics;
 

@@ -1,7 +1,7 @@
-package com.erico.desafio.itau.controller;
+package com.erico.desafio.itau.transaction.controller;
 
-import com.erico.desafio.itau.dto.StatisticsResponse;
-import com.erico.desafio.itau.dto.TransactionRequest;
+import com.erico.desafio.itau.transaction.dto.StatisticsResponse;
+import com.erico.desafio.itau.transaction.dto.TransactionRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

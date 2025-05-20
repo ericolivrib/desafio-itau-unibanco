@@ -1,6 +1,5 @@
-package com.erico.desafio.itau.controller;
+package com.erico.desafio.itau.transaction.controller;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import org.springframework.http.HttpHeaders;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.erico.desafio.itau.dto.StatisticsResponse;
-import com.erico.desafio.itau.dto.TransactionRequest;
-import com.erico.desafio.itau.service.TransactionService;
+import com.erico.desafio.itau.transaction.dto.StatisticsResponse;
+import com.erico.desafio.itau.transaction.dto.TransactionRequest;
+import com.erico.desafio.itau.transaction.TransactionService;
 
 import jakarta.validation.Valid;
 

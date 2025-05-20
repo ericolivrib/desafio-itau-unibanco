@@ -1,4 +1,4 @@
-package com.erico.desafio.itau.exception;
+package com.erico.desafio.itau.transaction;
 
 public class FutureTransactionException extends RuntimeException {
 
