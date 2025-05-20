@@ -32,7 +32,7 @@ public interface TransactionControllerSpec {
 
     @Operation(summary = "Estatísticas de transações", description = "Recupera as estatísticas das transações adicionadas em um intervalo de tempo", parameters = @Parameter(name = "intervalo", description = "Últimos segundos em que transações foram adicionadas", example = "60"), responses = {
             @ApiResponse(responseCode = "200", description = "Estatísticas recuperadas com sucesso", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = StatisticsResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(schema = @Schema(implementation = Void.class)))
     })
     ResponseEntity<StatisticsResponse> getStatistics(int interval);
 }
