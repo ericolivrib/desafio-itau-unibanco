@@ -29,6 +29,10 @@ public class TransactionService {
     return transaction.getId();
   }
 
+  Queue<Transaction> getTransactions() {
+    return transactions;
+  }
+
   /**
    * Limpa todas as transações presentes na fila de transações.
    */

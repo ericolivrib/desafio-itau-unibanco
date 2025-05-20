@@ -9,7 +9,11 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Queue;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 class TransactionServiceTest {
 
@@ -31,6 +35,24 @@ class TransactionServiceTest {
 
         // Assert
         Assertions.assertNotNull(result);
+    }
+
+    @Test
+    @DisplayName("Deve apagar todas as transações presentes na fila de transações")
+    void shouldClearAllTransactions() {
+        // Arrange
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(200.00), OffsetDateTime.now()));
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(100.00), OffsetDateTime.now()));
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(500.00), OffsetDateTime.now()));
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(750.00), OffsetDateTime.now()));
+
+        Assertions.assertFalse(underTest.getTransactions().isEmpty());
+
+        // Act
+        underTest.clearTransactions();
+
+        // Assert
+        Assertions.assertTrue(underTest.getTransactions().isEmpty());
     }
 
 }
