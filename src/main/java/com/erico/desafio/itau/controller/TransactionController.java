@@ -1,7 +1,6 @@
 package com.erico.desafio.itau.controller;
 
 import java.time.OffsetDateTime;
-import java.util.DoubleSummaryStatistics;
 import java.util.UUID;
 
 import org.springframework.http.HttpHeaders;
@@ -20,9 +19,6 @@ import com.erico.desafio.itau.dto.StatisticsResponse;
 import com.erico.desafio.itau.dto.TransactionRequest;
 import com.erico.desafio.itau.service.TransactionService;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
 @RestController
@@ -62,17 +58,11 @@ public class TransactionController implements TransactionControllerSpec {
 
   @GetMapping("/estatistica")
   public ResponseEntity<StatisticsResponse> getStatistics(@RequestParam(name = "intervalo", defaultValue = "60", required = false) int interval) {
-    DoubleSummaryStatistics statistics = transactionService.getStatistics(interval);
-
-    if (statistics.getCount() == 0) {
-      return ResponseEntity
-          .status(HttpStatus.OK)
-          .body(new StatisticsResponse(0, 0, 0, 0, 0));
-    }
+    StatisticsResponse response = transactionService.getStatistics(interval);
 
     return ResponseEntity
         .status(HttpStatus.OK)
-        .body(new StatisticsResponse(statistics));
+        .body(response);
   }
 
 }

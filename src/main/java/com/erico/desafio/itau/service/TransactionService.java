@@ -5,8 +5,8 @@ import java.util.DoubleSummaryStatistics;
 import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.stream.DoubleStream;
 
+import com.erico.desafio.itau.dto.StatisticsResponse;
 import com.erico.desafio.itau.dto.TransactionRequest;
 import org.springframework.stereotype.Service;
 
@@ -45,14 +45,20 @@ public class TransactionService {
    * segundos.
    * 
    * @param interval Intervalo de busca de transações em segundos.
-   * @return Estatísticas das transações.
+   * @return DTO com as estatísticas das transações.
    */
-  public DoubleSummaryStatistics getStatistics(int interval) {
+  public StatisticsResponse getStatistics(int interval) {
     OffsetDateTime now = OffsetDateTime.now();
 
-    return transactions.stream()
+    DoubleSummaryStatistics statistics = transactions.stream()
         .filter(t -> t.getDateTime().isAfter(now.minusSeconds(interval)))
         .mapToDouble((t) -> t.getValue().doubleValue())
         .summaryStatistics();
+
+    if (statistics.getCount() == 0) {
+      return new StatisticsResponse(0, 0, 0, 0, 0);
+    }
+
+    return new StatisticsResponse(statistics);
   }
 }
