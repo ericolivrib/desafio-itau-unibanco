@@ -93,4 +93,27 @@ class TransactionServiceTest {
         Assertions.assertEquals(200.00, result.min());
     }
 
+    @Test
+    @DisplayName("Dado um intervalo pequeno, deve retornar valores zerados ao buscar estatísticas")
+    void givenSmallInterval_whenGetStatistics_thenReturnStatisticsWithZeroValues() {
+        OffsetDateTime now = OffsetDateTime.now(fixedClock);
+
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(200.00), now.minusSeconds(20)));
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(300.00), now.minusSeconds(30)));
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(400.00), now.minusSeconds(40)));
+        underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(750.00), now.minusSeconds(50)));
+
+        int interval = 20;
+
+        // Act
+        StatisticsResponse result = underTest.getStatistics(interval);
+
+        // Assert
+        Assertions.assertEquals(0, result.count());
+        Assertions.assertEquals(0, result.sum());
+        Assertions.assertEquals(0, result.avg());
+        Assertions.assertEquals(0, result.max());
+        Assertions.assertEquals(0, result.min());
+    }
+
 }
