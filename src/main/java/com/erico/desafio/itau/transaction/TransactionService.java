@@ -25,7 +25,7 @@ public class TransactionService {
     OffsetDateTime now = OffsetDateTime.now();
 
     if (transactionDto.dateTime().isAfter(now)) {
-      throw new FutureTransactionException("Transação efetuação em uma data futura: "
+      throw new FutureTransactionException("Transação efetuada em uma data futura: "
               + transactionDto.dateTime());
     }
 
