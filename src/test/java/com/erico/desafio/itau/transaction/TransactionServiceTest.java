@@ -8,22 +8,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.Clock;
-import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.UUID;
 
 class TransactionServiceTest {
 
     TransactionService underTest;
 
-    Clock fixedClock;
-
     @BeforeEach
     void setUp() {
-        fixedClock = Clock.fixed(Instant.parse("2025-05-20T00:00:00Z"), ZoneOffset.UTC);
-        underTest = new TransactionService(fixedClock);
+        underTest = new TransactionService();
     }
 
     @Test
@@ -71,7 +65,7 @@ class TransactionServiceTest {
     @DisplayName("Dado um intervalo, quando buscar as estatísticas, deve retornar um DTO com as estatísticas")
     void givenInterval_whenGetStatistics_thenReturnStatisticsResponse() {
         // Arrange
-        OffsetDateTime now = OffsetDateTime.now(fixedClock);
+        OffsetDateTime now = OffsetDateTime.now();
 
         underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(200.00), now.minusSeconds(5)));
         underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(300.00), now.minusSeconds(10)));
@@ -94,7 +88,7 @@ class TransactionServiceTest {
     @Test
     @DisplayName("Dado um intervalo pequeno, deve retornar valores zerados ao buscar estatísticas")
     void givenSmallInterval_whenGetStatistics_thenReturnStatisticsWithZeroValues() {
-        OffsetDateTime now = OffsetDateTime.now(fixedClock);
+        OffsetDateTime now = OffsetDateTime.now();
 
         underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(200.00), now.minusSeconds(20)));
         underTest.addTransaction(new TransactionRequest(BigDecimal.valueOf(300.00), now.minusSeconds(30)));

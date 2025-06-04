@@ -1,6 +1,5 @@
 package com.erico.desafio.itau.transaction;
 
-import java.time.Clock;
 import java.time.OffsetDateTime;
 import java.util.DoubleSummaryStatistics;
 import java.util.Queue;
@@ -16,12 +15,6 @@ public class TransactionService {
 
   private final Queue<Transaction> transactions = new ConcurrentLinkedQueue<>();
 
-  private final Clock clock;
-
-    public TransactionService(Clock clock) {
-        this.clock = clock;
-    }
-
     /**
    * Adiciona uma nova transação na fila de transações.
    * 
@@ -29,7 +22,9 @@ public class TransactionService {
    * @return UUID da nova transação.
    */
   public UUID addTransaction(TransactionRequest transactionDto) {
-    if (transactionDto.dateTime().isAfter(OffsetDateTime.now())) {
+    OffsetDateTime now = OffsetDateTime.now();
+
+    if (transactionDto.dateTime().isAfter(now)) {
       throw new FutureTransactionException("Transação efetuação em uma data futura: "
               + transactionDto.dateTime());
     }
@@ -62,7 +57,7 @@ public class TransactionService {
    * @return DTO com as estatísticas das transações.
    */
   public StatisticsResponse getStatistics(int interval) {
-    OffsetDateTime now = OffsetDateTime.now(clock);
+    OffsetDateTime now = OffsetDateTime.now();
 
     DoubleSummaryStatistics statistics = transactions.stream()
         .filter(t -> t.getDateTime().isAfter(now.minusSeconds(interval)))
