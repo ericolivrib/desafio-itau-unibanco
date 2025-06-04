@@ -1,5 +1,6 @@
 package com.erico.desafio.itau.transaction.controller;
 
+import com.erico.desafio.itau.transaction.dto.StatisticsResponse;
 import com.erico.desafio.itau.transaction.dto.TransactionRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -69,5 +71,19 @@ class TransactionControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(""));
+    }
+
+    @Test
+    @DisplayName("Deve retornar estatísticas de transações adicionadas em um intervalo de tempo")
+    void givenInterval_whenGetStatistics_thenReturnSummaryStatistics() throws Exception {
+        StatisticsResponse response = new StatisticsResponse(0, 0, 0, 0, 0);
+
+        String responseBody = objectMapper.writeValueAsString(response);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/estatistica").param("intervalo", "60"))
+                .andDo(MockMvcResultHandlers.log())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().json(responseBody));
     }
 }
