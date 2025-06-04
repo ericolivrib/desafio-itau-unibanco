@@ -61,4 +61,13 @@ class TransactionControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
                 .andExpect(MockMvcResultMatchers.content().string(""));
     }
+
+    @Test
+    @DisplayName("Deve remover todas as transações")
+    void shouldDeleteAllTransactions() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/transacao"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(""));
+    }
 }
